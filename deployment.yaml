@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentiment-train-deployment
+  labels:
+    app: sentiment-train-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-train-app
+  template:
+    metadata:
+      labels:
+        app: sentiment-train-app
+    spec:
+        containers:
+        - name: myapp-container
+          image: mahamarif/sentiment-analysis-s140-lstm
+          command: ['bash', '-c', 'python train.py && tail -f /dev/null']
+          volumeMounts:
+          - name: sentiment-volume
+            mountPath: /model
+        volumes:
+        - name: sentiment-volume
+          persistentVolumeClaim:
+            claimName: sentiment-pvc
