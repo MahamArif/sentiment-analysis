@@ -11,7 +11,7 @@ RUN mkdir /model
 
 COPY data.zip ./data.zip
 COPY contractions.csv ./contractions.csv
-COPY train.py ./train.py
+COPY train_cnn.py ./train_cnn.py
 RUN unzip data.zip
 
-CMD python -W ignore train.py
+CMD python -W ignore train_cnn.py
