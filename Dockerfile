@@ -11,7 +11,7 @@ RUN mkdir /model
 
 COPY data.zip ./data.zip
 COPY contractions.csv ./contractions.csv
-COPY train_cnn.py ./train_cnn.py
+COPY naive_bayes.py ./naive_bayes.py
 RUN unzip data.zip
 
-CMD python -W ignore train_cnn.py
+CMD python -W ignore naive_bayes.py

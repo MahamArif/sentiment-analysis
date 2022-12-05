@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sentiment-train-deployment-cnn
+  name: sentiment-train-deployment-nb
   labels:
-    app: sentiment-train-app-cnn
+    app: sentiment-train-app-nb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sentiment-train-app-cnn
+      app: sentiment-train-app-nb
   template:
     metadata:
       labels:
-        app: sentiment-train-app-cnn
+        app: sentiment-train-app-nb
     spec:
         containers:
-        - name: myapp-container-cnn
-          image: mahamarif/sentiment-analysis-s140-cnn
-          command: ['bash', '-c', 'python train_cnn.py && tail -f /dev/null']
+        - name: myapp-container-nb
+          image: mahamarif/sentiment-analysis-s140-nb
+          command: ['bash', '-c', 'python naive_bayes.py && tail -f /dev/null']
           volumeMounts:
           - name: sentiment-volume
             mountPath: /model

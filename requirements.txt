@@ -2,7 +2,6 @@ scikit-learn
 pandas
 numpy
 seaborn
-scipy
-gensim
 matplotlib
-tensorflow
+nltk
+bs4
