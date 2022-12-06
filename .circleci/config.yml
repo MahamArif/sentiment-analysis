@@ -4,7 +4,7 @@ version: 2.1
 executors:
   docker-publisher: 
     environment:
-      IMAGE_NAME: mahamarif/sentiment-analysis-s140-xlnet
+      IMAGE_NAME: mahamarif/sentiment-analysis-s140-bert
     docker: # Each job requires specifying an executor
     # (either docker, macos, or machine), see
       - image: circleci/node:latest

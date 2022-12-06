@@ -1,7 +1,6 @@
 scikit-learn
 pandas
 numpy
-tensorflow
 transformers==2.9.0 
-pytorch_lightning==0.7.5
 torch
+bs4

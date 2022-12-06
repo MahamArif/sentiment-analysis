@@ -11,13 +11,12 @@ import re
 import time
 import datetime
 import random
-import pickle
 import numpy as np
 import pandas as pd
 import torch
 from bs4 import BeautifulSoup
 
-from transformers import BertTokenizer
+from transformers import BertTokenizer, BertForSequenceClassification, AdamW, get_linear_schedule_with_warmup
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score, roc_auc_score, recall_score, f1_score, balanced_accuracy_score, confusion_matrix, classification_report
@@ -193,7 +192,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 # The DataLoader needs to know our batch size for training, so we specify it 
 # here. For fine-tuning BERT on a specific task, the authors recommend a batch 
 # size of 16 or 32.
-batch_size = 512
+batch_size = 32
 
 # Create the DataLoaders for our training and validation sets.
 # We'll take training samples in random order. 
@@ -209,8 +208,6 @@ validation_dataloader = DataLoader(
             sampler = SequentialSampler(val_dataset), # Pull out batches sequentially.
             batch_size = batch_size # Evaluate with this batch size.
         )
-
-from transformers import BertForSequenceClassification, AdamW, BertConfig
 
 # Load BertForSequenceClassification, the pretrained BERT model with a single 
 # linear classification layer on top. 
@@ -245,8 +242,6 @@ optimizer = AdamW(model.parameters(),
                   lr = 2e-5, # args.learning_rate - default is 5e-5, our notebook had 2e-5
                   eps = 1e-8 # args.adam_epsilon  - default is 1e-8.
                 )
-
-from transformers import get_linear_schedule_with_warmup
 
 # Number of training epochs. The BERT authors recommend between 2 and 4. 
 # We chose to run for 4, but we'll see later that this may be over-fitting the
@@ -288,7 +283,6 @@ seed_val = 42
 random.seed(seed_val)
 np.random.seed(seed_val)
 torch.manual_seed(seed_val)
-torch.cuda.manual_seed_all(seed_val)
 
 # We'll store a number of quantities such as training and validation loss, 
 # validation accuracy, and timings.
@@ -542,7 +536,7 @@ attention_masks = torch.cat(attention_masks, dim=0)
 labels = torch.tensor(labels)
 
 # Set the batch size.  
-batch_size = 512
+batch_size = 32
 
 # Create the DataLoader.
 prediction_data = TensorDataset(input_ids, attention_masks, labels)
