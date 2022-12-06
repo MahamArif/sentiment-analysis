@@ -8,39 +8,23 @@ Original file is located at
 """
 
 import re
-import pickle
+import os
 import numpy as np
 import pandas as pd
 
 # Plot libraries
-import seaborn as sns
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import precision_score, roc_auc_score, recall_score, f1_score, balanced_accuracy_score
-from gensim.models import Word2Vec
-from tensorflow.keras.preprocessing.text import Tokenizer
+from sklearn.metrics import precision_score, roc_auc_score, recall_score, f1_score, balanced_accuracy_score, classification_report 
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
-from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Bidirectional, GlobalMaxPool1D, Dense, LSTM, Conv1D, Embedding
 
 import math
 import torch
 # import torch.nn as nn
-from torch.nn import BCEWithLogitsLoss, NLLLoss
+from torch.nn import BCEWithLogitsLoss
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
-# from pytorch_transformers import XLNetModel, XLNetTokenizer, XLNetForSequenceClassification
-from transformers import AdamW, XLNetTokenizer, XLNetModel, TFXLNetModel, XLNetLMHeadModel, XLNetConfig, XLNetForSequenceClassification
-from keras.preprocessing.sequence import pad_sequences
+from transformers import AdamW, XLNetTokenizer, XLNetModel
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm, trange
-import unicodedata
-import itertools
-import plotly
-from plotly import graph_objs as go
-import plotly.express as px
-import plotly.figure_factory as ff
-from collections import Counter
 
 device = torch.device("cpu")
 
@@ -130,7 +114,6 @@ train, test = train_test_split(dataset, test_size = 0.08, random_state = 2022)
 print('Number of training sentences: {:,}\n'.format(train.shape[0]))
 print('Number of testing sentences: {:,}\n'.format(test.shape[0]))
 
-from transformers import XLNetTokenizer, XLNetModel
 PRE_TRAINED_MODEL_NAME = 'xlnet-base-cased'
 tokenizer = XLNetTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME, do_lower_case=True)
 
@@ -142,7 +125,6 @@ dataset['token_length'] = dataset.text.apply(get_tokens_len)
 
 print(dataset['sentiment'].unique())
 
-from transformers import XLNetTokenizer, XLNetModel
 PRE_TRAINED_MODEL_NAME = 'xlnet-base-cased'
 tokenizer = XLNetTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME, do_lower_case=True)
 
@@ -153,8 +135,6 @@ print(' Original sentence {}: '.format( sentences[1]))
 print('Tokenized sentence {}:  '.format(tokenizer.tokenize(sentences[1])))
 # Print the tweet mapped to token ids.
 print('Token IDs  {}: '.format(tokenizer.convert_tokens_to_ids(tokenizer.tokenize(sentences[1]))))
-
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def tokenize_inputs(text_list, tokenizer, num_embeddings=120):
     """

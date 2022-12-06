@@ -1,7 +1,7 @@
 scikit-learn
 pandas
 numpy
-seaborn
-matplotlib
-nltk
-bs4
+tensorflow
+transformers==2.9.0 
+pytorch_lightning==0.7.5
+torch
