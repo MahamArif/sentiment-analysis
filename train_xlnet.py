@@ -215,7 +215,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 # The DataLoader needs to know our batch size for training, so we specify it
 # here. Batch size of 16 or 32.
-batch_size = 16
+batch_size = 128
 
 # Create the DataLoaders for our training and validation sets.
 # We'll take training samples in random order.
@@ -295,14 +295,21 @@ optimizer_grouped_parameters = [
 ]
 optimizer = AdamW(optimizer_grouped_parameters, lr=3e-5)
 
-def train(model, num_epochs,\
-          optimizer,\
-          train_dataloader, valid_dataloader,\
-          model_save_path,\
-          train_loss_set=[], valid_loss_set = [],\
-          lowest_eval_loss=None, start_epoch=0,\
-          device="cpu"
-          ):
+print("Defining Training Function")
+print()
+
+def train(
+  model, 
+  num_epochs,
+  optimizer,
+  train_dataloader, 
+  valid_dataloader,
+  model_save_path,
+  train_loss_set=[], 
+  valid_loss_set = [],
+  lowest_eval_loss=None, 
+  start_epoch=0,
+):
   """
   Train the model and save the model with the lowest validation loss
   """
@@ -342,7 +349,7 @@ def train(model, num_epochs,\
     # Train the data for one epoch
     for step, batch in enumerate(train_dataloader):
         # Progress update every 40 batches.
-        if step % 40 == 0 and not step == 0:
+        if not step == 0:
             # Calculate elapsed time in minutes.
             elapsed = format_time(time.time() - t0)
             # Report progress.
@@ -512,11 +519,11 @@ def load_model(save_path):
   
   return model, epochs, lowest_eval_loss, train_loss_hist, valid_loss_hist
 
-num_epochs = 5
-
-cwd = os.getcwd()
+num_epochs = 10
 
 model_save_path = output_model_file = "/model/xlnet.bin"
+
+print("Starting training ....")
 
 model, train_loss_set, valid_loss_set, training_stats = train(
     model=model,
@@ -525,7 +532,6 @@ model, train_loss_set, valid_loss_set, training_stats = train(
     train_dataloader=train_dataloader,
     valid_dataloader=validation_dataloader,
     model_save_path=model_save_path,
-    device="cpu"
 )
 
 save_path = "/model/xlnet.pth"
@@ -552,7 +558,7 @@ test_attention_masks = create_attn_masks(test_input_ids)
 test["features"] = test_input_ids.tolist()
 test["masks"] = test_attention_masks
 
-def generate_predictions(model, df, device="cpu", batch_size=16):
+def generate_predictions(model, df, batch_size=128):
   num_iter = math.ceil(df.shape[0]/batch_size)
   
   pred_probs = []
@@ -572,7 +578,7 @@ def generate_predictions(model, df, device="cpu", batch_size=16):
         
   return pred_probs
   
-y_pred = generate_predictions(model, test, device="cpu", batch_size=16)
+y_pred = generate_predictions(model, test, batch_size=128)
 
 y_test = test['sentiment']
 
