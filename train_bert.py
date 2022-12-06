@@ -171,7 +171,7 @@ history = model.fit(
     validation_split=0.2,
     epochs=5,
     callbacks=[checkpoint, earlystopping],
-    batch_size=512,
+    batch_size=32,
     verbose=1
 )
 
