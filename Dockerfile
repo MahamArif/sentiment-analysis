@@ -11,8 +11,8 @@ RUN mkdir /model
 
 COPY data.zip ./data.zip
 COPY contractions.csv ./contractions.csv
-COPY train_bert.py ./train_bert.py
-COPY tokenization.py ./tokenization.py
+COPY train_xlnet.py ./train_xlnet.py
+# COPY tokenization.py ./tokenization.py
 RUN unzip data.zip
 
-CMD python -W ignore train_bert.py
+CMD python -W ignore train_xlnet.py

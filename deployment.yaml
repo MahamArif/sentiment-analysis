@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sentiment-train-deployment-bert
+  name: sentiment-train-deployment-xlnet
   labels:
-    app: sentiment-train-app-bert
+    app: sentiment-train-app-xlnet
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sentiment-train-app-bert
+      app: sentiment-train-app-xlnet
   template:
     metadata:
       labels:
-        app: sentiment-train-app-bert
+        app: sentiment-train-app-xlnet
     spec:
         containers:
-        - name: myapp-container-bert
-          image: mahamarif/sentiment-analysis-s140-bert
-          command: ['bash', '-c', 'python train_bert.py && tail -f /dev/null']
+        - name: myapp-container-xlnet
+          image: mahamarif/sentiment-analysis-s140-xlnet
+          command: ['bash', '-c', 'python train_xlnet.py && tail -f /dev/null']

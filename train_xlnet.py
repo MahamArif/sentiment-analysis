@@ -215,7 +215,7 @@ from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 # The DataLoader needs to know our batch size for training, so we specify it
 # here. Batch size of 16 or 32.
-batch_size = 128
+batch_size = 32
 
 # Create the DataLoaders for our training and validation sets.
 # We'll take training samples in random order.
@@ -349,7 +349,7 @@ def train(
     # Train the data for one epoch
     for step, batch in enumerate(train_dataloader):
         # Progress update every 40 batches.
-        if not step == 0:
+        if step % 40 == 0 and not step == 0:
             # Calculate elapsed time in minutes.
             elapsed = format_time(time.time() - t0)
             # Report progress.
@@ -558,7 +558,7 @@ test_attention_masks = create_attn_masks(test_input_ids)
 test["features"] = test_input_ids.tolist()
 test["masks"] = test_attention_masks
 
-def generate_predictions(model, df, batch_size=128):
+def generate_predictions(model, df, batch_size=32):
   num_iter = math.ceil(df.shape[0]/batch_size)
   
   pred_probs = []
@@ -578,7 +578,7 @@ def generate_predictions(model, df, batch_size=128):
         
   return pred_probs
   
-y_pred = generate_predictions(model, test, batch_size=128)
+y_pred = generate_predictions(model, test, batch_size=32)
 
 y_test = test['sentiment']
 
