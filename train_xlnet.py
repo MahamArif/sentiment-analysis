@@ -110,7 +110,7 @@ processedtext = list(dataset['processed_text'])
 data_pos = processedtext[800000:]
 data_neg = processedtext[:800000]
 
-train, test = train_test_split(dataset, test_size = 0.08, random_state = 2022)
+train, test = train_test_split(dataset, test_size = 0.2, random_state = 2022)
 print('Number of training sentences: {:,}\n'.format(train.shape[0]))
 print('Number of testing sentences: {:,}\n'.format(test.shape[0]))
 
