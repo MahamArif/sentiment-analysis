@@ -519,7 +519,7 @@ def load_model(save_path):
   
   return model, epochs, lowest_eval_loss, train_loss_hist, valid_loss_hist
 
-num_epochs = 10
+num_epochs = 5
 
 model_save_path = output_model_file = "/model/xlnet.bin"
 
